@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 
 @RestController
+@RequestMapping("/employee")
 public class EmployeeController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class EmployeeController {
     @Autowired
     private SkillsRepository skillsRepository;
 
-    @GetMapping("/employee")
+    @GetMapping
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
@@ -31,7 +31,7 @@ public class EmployeeController {
      * @param id
      * @return
      */
-    @GetMapping("/employee/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Employee> getASkill(@PathVariable("id") int id) {
         Employee emp = employeeRepository.findById(id);
         if (emp == null) {
@@ -40,18 +40,7 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.OK).body(emp);
     }
 
-    @PostMapping("/employee")
-    public ResponseEntity addEmployee(@RequestBody Employee emp) {
-        try {
-            employeeRepository.save(emp);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @PutMapping("/employee/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity updateEmployee(@RequestBody Employee emp) {
         try {
             Employee employee = employeeRepository.findById(emp.getId());
@@ -66,5 +55,16 @@ public class EmployeeController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @PostMapping
+    public ResponseEntity addEmployee(@RequestBody Employee emp) {
+        try {
+            employeeRepository.save(emp);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
