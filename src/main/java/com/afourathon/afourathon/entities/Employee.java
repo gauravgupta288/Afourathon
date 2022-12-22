@@ -34,5 +34,4 @@ public class Employee {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "emp_id_fk", referencedColumnName = "employeeId")
     private List<EmployeeSkills> employeeSkills;
-
 }
