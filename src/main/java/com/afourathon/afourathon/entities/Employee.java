@@ -6,9 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -17,7 +18,7 @@ import java.util.List;
 public class Employee {
 
     @Id
-    @NotBlank(message = "Employee Id is must")
+    @NotBlank(message = "Employee Id is required")
     @Column(name = "id")
     private int id;
 
@@ -25,15 +26,15 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
-    @NotBlank(message = "Name must not be blank")
+    @NotBlank(message = "Name is required")
     @Column(name = "fullName")
     private String fullName;
 
-    @NotBlank(message = "Password must not be blank")
+    @NotBlank(message = "Password is required")
     @Column(name = "password")
     private String password;
 
-    @NotBlank(message = "City not be blank")
+    @NotBlank(message = "City is required")
     @Column(name = "city")
     private String city;
 
@@ -42,7 +43,14 @@ public class Employee {
     @Column(name = "mobile")
     private long mobile;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "emp_id_fk", referencedColumnName = "id")
-    private List<EmployeeSkills> employeeSkills;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "EMPLOYEE_SKILLS_DETAILS",
+            joinColumns = {
+            @JoinColumn(name = "empId", referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+            @JoinColumn(name = "skillId", referencedColumnName = "id")
+            }
+    )
+    private Set<SkillDetails> skillDetails;
 }

@@ -28,16 +28,36 @@ public class EmployeeController {
     /**
      * Get a single employee details
      *
-     * @param id
-     * @return
+     * @param id emp id
+     * @return employee object
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getASkill(@PathVariable("id") int id) {
+    public ResponseEntity<Employee> getAEmployee(@PathVariable("id") int id) {
         Employee emp = employeeRepository.findById(id);
         if (emp == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.status(HttpStatus.OK).body(emp);
+    }
+
+    /**
+     * Add a new employee
+     *
+     * @param emp Employee object
+     * @return Employee object
+     */
+    @PostMapping
+    public ResponseEntity addEmployee(@RequestBody Employee emp) {
+        try {
+            Employee employee = employeeRepository.findById(emp.getId());
+            if (employee == null) {
+                employeeRepository.save(emp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}")
@@ -55,16 +75,5 @@ public class EmployeeController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
-
-    @PostMapping
-    public ResponseEntity addEmployee(@RequestBody Employee emp) {
-        try {
-            employeeRepository.save(emp);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
