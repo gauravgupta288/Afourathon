@@ -1,8 +1,10 @@
 package com.afourathon.afourathon.controllers;
 
 import com.afourathon.afourathon.dao.EmployeeRepository;
+import com.afourathon.afourathon.dao.SKillDetailsRepository;
 import com.afourathon.afourathon.dao.SkillsRepository;
 import com.afourathon.afourathon.entities.Employee;
+import com.afourathon.afourathon.services.SkillsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,12 @@ public class EmployeeController {
 
     @Autowired
     private SkillsRepository skillsRepository;
+
+    @Autowired
+    private SkillsServices skillsServices;
+
+    @Autowired
+    private SKillDetailsRepository sKillDetailsRepository;
 
     @GetMapping
     public List<Employee> getAllEmployees() {
@@ -49,10 +57,7 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity addEmployee(@RequestBody Employee emp) {
         try {
-            Employee employee = employeeRepository.findById(emp.getId());
-            if (employee == null) {
-                employeeRepository.save(emp);
-            }
+            employeeRepository.save(emp);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -68,7 +73,7 @@ public class EmployeeController {
                 employeeRepository.save(emp);
             } else {
                 employeeRepository.updateEmployeeInfo(emp.getFullName(), emp.getEmail(),
-                        emp.getCity(), emp.getMobile(), emp.getId());
+                        emp.getId());
             }
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {

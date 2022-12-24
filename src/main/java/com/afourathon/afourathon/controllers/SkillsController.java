@@ -8,12 +8,12 @@ import com.afourathon.afourathon.services.SkillsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/skills")
 public class SkillsController {
 
     @Autowired
@@ -30,9 +30,9 @@ public class SkillsController {
      *
      * @return
      */
-    @GetMapping("/skills")
-    public List<Employee> getSkills() {
-        return employeeRepository.findAll();
+    @GetMapping
+    public List<Skills> getSkills() {
+        return skillsRepository.findAll();
     }
 
     /**
@@ -40,21 +40,9 @@ public class SkillsController {
      *
      * @return Skills object
      */
-    @PostMapping("/skills")
-    public ResponseEntity<Employee> addSkills(@RequestBody Employee employee) {
-//        employee.getSkills().forEach(skill -> {
-//            Employee emp = employeeRepository.findById(employee.getEmployeeId());
-//            Skills searchResult = skillsServices.getSkillIdBySkillName(skill.getSkill(), employee.getEmployeeId());
-//            if (searchResult == null) {
-//                if(emp == null){
-//                    employeeRepository.save(employee);
-//                }else{
-//                    skillsRepository.save(skill);
-//                }
-//            } else {
-//                updateASkill(searchResult.getEmp_id(), searchResult.getSkill(), skill);
-//            }
-//        });
+    @PostMapping
+    public ResponseEntity<Employee> addSkills(@RequestBody Skills skills) {
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -65,7 +53,7 @@ public class SkillsController {
      * @param name skill name to delete
      * @return
      */
-    @DeleteMapping("/skills/{id}/{name}")
+    @DeleteMapping("/{id}/{name}")
     public ResponseEntity<Employee> deleteASkill(@PathVariable int id, @PathVariable String name) {
         Skills skill = skillsServices.getSkillIdBySkillName(name, id);
         if (skill == null) {
@@ -83,7 +71,7 @@ public class SkillsController {
      * @param skillsJson json of skill data to update
      * @return
      */
-    @PutMapping("/skills/{id}/{skillName}")
+    @PutMapping("/{id}/{skillName}")
     public ResponseEntity<Employee> updateASkill(@PathVariable int empId, @PathVariable String skillName, @RequestBody Skills skillsJson) {
 //        Skills skill = skillsServices.getSkillIdBySkillName(skillName, empId);
 //        if (skill == null) {

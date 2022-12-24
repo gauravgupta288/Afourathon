@@ -2,33 +2,27 @@ package com.afourathon.afourathon.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
-import java.util.Set;
-
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
 public class SkillDetails {
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @NotBlank(message = "Skill level is required")
-    @Column(name = "skill_level")
+    @NotNull
+    private int yearsOfExperience;
+
+    @NotBlank
     private String skillLevel;
 
-    @NotBlank(message = "Years of experience is required")
-    @Column(name = "years_of_experience")
-    private double yearsOfExperience;
-
-    @ManyToMany(mappedBy = "skillDetails", fetch = FetchType.LAZY)
-    private Set<Employee> employees;
-
-    private int skill_id_fk;
+    @NotNull
+    private int empId;
 }

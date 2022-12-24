@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface SkillsRepository extends JpaRepository<Skills, Integer> {
 
     @Modifying
@@ -14,5 +16,9 @@ public interface SkillsRepository extends JpaRepository<Skills, Integer> {
     public void updateSkill(int id, int skillId, String skillName, int yoe, String domain, String skillLevel);
 
     public Skills findById(int id);
+
+
+    @Query(value =  "select * from skills",  nativeQuery = true)
+    public List<Skills> getAllSkills();
 
 }

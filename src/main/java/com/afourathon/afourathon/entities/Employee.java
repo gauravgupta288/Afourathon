@@ -3,9 +3,12 @@ package com.afourathon.afourathon.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.math.BigInteger;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -18,11 +21,10 @@ import java.util.Set;
 public class Employee {
 
     @Id
-    @NotBlank(message = "Employee Id is required")
+    @NotNull(message = "Employee Id is required")
     @Column(name = "id")
     private int id;
 
-    @Email(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$")
     @Column(name = "email")
     private String email;
 
@@ -30,21 +32,11 @@ public class Employee {
     @Column(name = "fullName")
     private String fullName;
 
-    @NotBlank(message = "Password is required")
-    @Column(name = "password")
-    private String password;
-
-    @NotBlank(message = "City is required")
-    @Column(name = "city")
-    private String city;
-
-    @Size(min = 10, max = 10, message = "Mobile number must be in 10 digits only")
-    @NotBlank(message = "Mobile number must not be blank")
-    @Column(name = "mobile")
-    private long mobile;
+    @NotBlank
+    private String team;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "EMPLOYEE_SKILLS_DETAILS",
+    @JoinTable(name = "EMPLOYEE_SKILLS",
             joinColumns = {
             @JoinColumn(name = "empId", referencedColumnName = "id")
             },
@@ -52,5 +44,5 @@ public class Employee {
             @JoinColumn(name = "skillId", referencedColumnName = "id")
             }
     )
-    private Set<SkillDetails> skillDetails;
+    private List<Skills> skills;
 }
