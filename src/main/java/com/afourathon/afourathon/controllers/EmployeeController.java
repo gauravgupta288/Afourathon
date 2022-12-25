@@ -1,7 +1,6 @@
 package com.afourathon.afourathon.controllers;
 
 import com.afourathon.afourathon.dao.EmployeeRepository;
-import com.afourathon.afourathon.dao.SKillDetailsRepository;
 import com.afourathon.afourathon.dao.SkillsRepository;
 import com.afourathon.afourathon.entities.Employee;
 import com.afourathon.afourathon.services.SkillsServices;
@@ -25,10 +24,6 @@ public class EmployeeController {
     @Autowired
     private SkillsServices skillsServices;
 
-    @Autowired
-    private SKillDetailsRepository sKillDetailsRepository;
-
-    @GetMapping
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }

@@ -35,14 +35,7 @@ public class Employee {
     @NotBlank
     private String team;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "EMPLOYEE_SKILLS",
-            joinColumns = {
-            @JoinColumn(name = "empId", referencedColumnName = "id")
-            },
-            inverseJoinColumns = {
-            @JoinColumn(name = "skillId", referencedColumnName = "id")
-            }
-    )
+    @OneToMany(targetEntity = Skills.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "empId", referencedColumnName = "id")
     private List<Skills> skills;
 }

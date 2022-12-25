@@ -27,12 +27,15 @@ public class Skills {
     @NotBlank(message = "skill is required")
     private String skill;
 
-    @ManyToMany(mappedBy = "skills", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Employee> employees;
+    @NotNull
+    private int yearsOfExperience;
 
+    @NotBlank
+    private String skillLevel;
 
-    @OneToMany(targetEntity = SkillDetails.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "skillId_fk", referencedColumnName = "id")
-    private List<SkillDetails> skillDetails;
+    private int empId;
 
+    public void setSkill(String skill){
+        this.skill = skill.toLowerCase();
+    }
 }
