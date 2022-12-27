@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -61,7 +62,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateEmployee(@RequestBody Employee emp) {
+    public ResponseEntity updateEmployee(@PathVariable int id, @RequestBody Employee emp) {
         try {
             Employee employee = employeeRepository.findById(emp.getId());
             if (employee == null) {
@@ -71,6 +72,22 @@ public class EmployeeController {
                         emp.getId());
             }
             return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteEmployee(@PathVariable int id) {
+        try {
+            Employee employee = employeeRepository.findById(id);
+            if (employee == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                employeeRepository.deleteAllById(Collections.singleton(id));
+            }
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
