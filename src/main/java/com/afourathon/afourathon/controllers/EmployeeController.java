@@ -61,6 +61,12 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * Update employee details
+     * @param id employee id
+     * @param emp employee json
+     * @return Response Entity
+     */
     @PutMapping("/{id}")
     public ResponseEntity updateEmployee(@PathVariable int id, @RequestBody Employee emp) {
         try {
@@ -78,6 +84,11 @@ public class EmployeeController {
         }
     }
 
+    /**
+     * Delete employee details
+     * @param id employee id
+     * @return Response Entity
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity deleteEmployee(@PathVariable int id) {
         try {
