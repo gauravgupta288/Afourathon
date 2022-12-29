@@ -2,7 +2,6 @@ package com.afourathon.afourathon.controllers;
 
 import com.afourathon.afourathon.dao.EmployeeRepository;
 import com.afourathon.afourathon.dao.SkillsRepository;
-import com.afourathon.afourathon.entities.Employee;
 import com.afourathon.afourathon.entities.Skills;
 import com.afourathon.afourathon.services.SkillsServices;
 import org.springframework.beans.factory.annotation.Autowired;
