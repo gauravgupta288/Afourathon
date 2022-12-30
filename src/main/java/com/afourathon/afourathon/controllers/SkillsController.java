@@ -29,7 +29,7 @@ public class SkillsController {
      *
      * @return
      */
-    @GetMapping
+    @GetMapping("/{id}")
     public List<Skills> getSkills() {
         return skillsRepository.findAll();
     }
