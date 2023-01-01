@@ -62,7 +62,7 @@ public class EmployeeController {
     }
 
     /**
-     * Update employee details
+     * Update employee data
      * @param id employee id
      * @param emp employee json
      * @return Response Entity
@@ -85,7 +85,7 @@ public class EmployeeController {
     }
 
     /**
-     * Delete employee details
+     * Delete employee data
      * @param id employee id
      * @return Response Entity
      */
