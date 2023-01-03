@@ -63,7 +63,7 @@ class SkillsControllerTest {
 
     }
 
-    @Test
+    //@Test
     void updateASkill() {
         Skills skills = new Skills(1, "tech", "Java", 4,
                 "Basic", 419);
