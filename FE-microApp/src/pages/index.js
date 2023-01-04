@@ -1,2 +1,2 @@
-export {default as PersonalSkills} from './personal-skills'
-export {default as TeamSkills} from './team-skills'
+export {default as PersonalSkillsPage} from './personalSkillsPage'
+export {default as TeamSkillsPage} from './teamSkillsPage'

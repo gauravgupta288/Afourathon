@@ -1,7 +1,8 @@
 import React from 'react'
 
+import Typography from '@mui/material/Typography'
 import Drawer from '@mui/material/Drawer'
-import Toolbar from '@mui/material/Toolbar'
+import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
@@ -23,8 +24,29 @@ export default function Navbar(){
             variant="permanent"
             anchor="left"
         >
-            <Toolbar />
-            <Divider />
+            <Box sx={navbarStyles.box}>
+                <Typography 
+                    sx= {navbarStyles.title}
+                    align= 'left'
+                    variant="h5" 
+                    gutterBottom
+                >
+                    Micro App
+                </Typography>
+                <Typography 
+                    sx={navbarStyles.caption}
+                    variant="caption" 
+                    display="block" 
+                    gutterBottom
+                >
+                    Skill Management
+                </Typography>
+            </Box>
+            
+            <Divider sx={navbarStyles.divider}/>
+            
+            
+            
             <List>
                 {navbarItems.map((item) => (
                 <ListItem 
