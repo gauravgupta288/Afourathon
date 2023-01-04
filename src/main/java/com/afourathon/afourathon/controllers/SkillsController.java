@@ -31,7 +31,7 @@ public class SkillsController {
      */
     @GetMapping("/{id}")
     public List<Skills> getSkills(@PathVariable int id) {
-        return skillsRepository.findAll();
+        return skillsRepository.getAllSkillsOnEmployeeId(id);
     }
 
     /**

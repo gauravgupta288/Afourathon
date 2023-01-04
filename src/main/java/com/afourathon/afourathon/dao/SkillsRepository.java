@@ -22,10 +22,12 @@ public interface SkillsRepository extends JpaRepository<Skills, Integer> {
     public Skills findByName(String skill, int id);
 
 
-    @Query(value =  "select * from skills",  nativeQuery = true)
+    @Query(value =  "select * from skills ",  nativeQuery = true)
     public List<Skills> getAllSkills();
 
     @Query(value =  "select skill from skills where domain = ?1",  nativeQuery = true)
     public List<String> getSkillsOnDomain(String domain);
 
+    @Query(value =  "select * from skills where emp_id = ?1 ",  nativeQuery = true)
+    public List<Skills> getAllSkillsOnEmployeeId(int id);
 }
