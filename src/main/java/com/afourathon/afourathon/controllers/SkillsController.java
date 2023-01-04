@@ -29,7 +29,7 @@ public class SkillsController {
      *
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping
     public List<Skills> getSkills() {
         return skillsRepository.findAll();
     }
@@ -85,5 +85,15 @@ public class SkillsController {
         }
         skillsRepository.deleteById(skill.getId());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    /**
+     * Get all skills based on domain
+     *
+     * @return
+     */
+    @GetMapping("/{domain}")
+    public List<String> getSkills(@PathVariable String domain) {
+        return skillsRepository.getSkillsOnDomain(domain);
     }
 }

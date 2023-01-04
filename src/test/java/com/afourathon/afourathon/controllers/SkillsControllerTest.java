@@ -2,7 +2,9 @@ package com.afourathon.afourathon.controllers;
 
 import com.afourathon.afourathon.dao.EmployeeRepository;
 import com.afourathon.afourathon.dao.SkillsRepository;
+import com.afourathon.afourathon.entities.Employee;
 import com.afourathon.afourathon.entities.Skills;
+import jakarta.annotation.Priority;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ class SkillsControllerTest {
 
     @Autowired
     private SkillsController skillsController;
+
+    @Autowired
+    private EmployeeController employeeController;
 
     /**
      * Unit test for getSkill api
@@ -63,7 +68,7 @@ class SkillsControllerTest {
 
     }
 
-    //@Test
+    @Test
     void updateASkill() {
         Skills skills = new Skills(1, "tech", "Java", 4,
                 "Basic", 419);
@@ -81,6 +86,8 @@ class SkillsControllerTest {
 
     @Test
     void deleteASkill() {
+        Employee employee = new Employee(419, "gaurav.gupta@aforutech.com", "Gaurav Gupta", "Resolve", List.of());
+        employeeController.addEmployee(employee);
         String skillToDelete = "Test_SKILL_TO_DELTEE";
         Skills skills = new Skills(1, "tech", skillToDelete, 4,
                 "Basic", 419);

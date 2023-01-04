@@ -12,7 +12,7 @@ public interface SkillsRepository extends JpaRepository<Skills, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Skills SET skill = ?3, years_of_experience = ?4 ,domain = ?5, skill_level = ?6 WHERE emp_id = ?1 and id = ?2", nativeQuery = true)
+    @Query(value = "UPDATE skills SET skill = ?3, years_of_experience = ?4 ,domain = ?5, skill_level = ?6 WHERE emp_id = ?1 and id = ?2", nativeQuery = true)
     public void updateSkill(int id, int skillId, String skillName, int yoe, String domain, String skillLevel);
 
     public Skills findById(int id);
@@ -24,5 +24,8 @@ public interface SkillsRepository extends JpaRepository<Skills, Integer> {
 
     @Query(value =  "select * from skills",  nativeQuery = true)
     public List<Skills> getAllSkills();
+
+    @Query(value =  "select skill from skills where domain = ?1",  nativeQuery = true)
+    public List<String> getSkillsOnDomain(String domain);
 
 }
