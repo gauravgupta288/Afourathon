@@ -4,7 +4,6 @@ import com.afourathon.afourathon.dao.EmployeeRepository;
 import com.afourathon.afourathon.dao.SkillsRepository;
 import com.afourathon.afourathon.entities.Employee;
 import com.afourathon.afourathon.services.EmployeeServices;
-import com.afourathon.afourathon.services.SkillsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
