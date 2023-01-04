@@ -92,7 +92,7 @@ public class SkillsController {
      *
      * @return
      */
-    @GetMapping("/{domain}")
+    @GetMapping("/domain/{domain}")
     public List<String> getSkills(@PathVariable String domain) {
         return skillsRepository.getSkillsOnDomain(domain);
     }
