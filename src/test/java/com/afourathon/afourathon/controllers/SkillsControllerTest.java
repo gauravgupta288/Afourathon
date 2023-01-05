@@ -39,7 +39,7 @@ class SkillsControllerTest {
                 "Basic", 419);
 
         skillsController.addSkills(419, skills);
-        List<Skills> allSkills = skillsController.getSkills();
+        List<Skills> allSkills = skillsController.getSkills(419);
 
         Skills result = allSkills.stream()
                 .filter(s -> s.getSkill().equals(skills.getSkill())).findAny().get();
@@ -55,7 +55,7 @@ class SkillsControllerTest {
                 "Basic", 419);
 
         ResponseEntity<Skills> response = skillsController.addSkills(419, skills);
-        List<Skills> allSkills = skillsController.getSkills();
+        List<Skills> allSkills = skillsController.getSkills(419);
 
 
         Skills result = allSkills.stream()
@@ -74,7 +74,7 @@ class SkillsControllerTest {
                 "Basic", 419);
 
         skillsController.updateASkill(419, skills);
-        List<Skills> allSkills = skillsController.getSkills();
+        List<Skills> allSkills = skillsController.getSkills(419);
 
         Skills result = allSkills.stream()
                 .filter(s -> s.getSkill().equals(skills.getSkill())).findAny().get();
@@ -97,7 +97,7 @@ class SkillsControllerTest {
         assertTrue(response.getStatusCode().is2xxSuccessful(), "Skill not saved in DB");
         response = skillsController.deleteASkill(419, skillToDelete);
 
-        List<Skills> allSkills = skillsController.getSkills();
+        List<Skills> allSkills = skillsController.getSkills(419);
         Skills result = allSkills.stream()
                 .filter(s -> skillToDelete.equals(s.getSkill())).findAny().orElse(null);
         assertTrue(response.getStatusCode().is2xxSuccessful(), "Skill not deleted from DB");

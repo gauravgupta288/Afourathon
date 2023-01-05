@@ -24,6 +24,7 @@ public class EmployeeServices {
         for(Employee emp : emps){
             Map<String, Object> innerMap = new LinkedHashMap<>();
 
+            innerMap.put("empId", emp.getId());
             innerMap.put("name", emp.getFullName());
             innerMap.put("email", emp.getEmail());
             int skillSize = emp.getSkills().size();
