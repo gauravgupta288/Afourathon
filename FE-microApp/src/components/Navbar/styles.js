@@ -1,13 +1,14 @@
 export const navbarStyles = {
     drawer: {
-        backgroundColor: '#101F33',
-        flexShrink: 0,
+        width: 240,
+        height: '100vh',
+        flexShrink: 0,   
         '& .MuiDrawer-paper': {
             width: 240,
             boxSizing: 'border-box',
             backgroundColor:'#081627',
             // backgroundColor: '#101F33',
-            color: 'rgba(255,255,255,0.7)'
+            color: 'rgba(255,255,255,0.7)',
         },
     },
     '& .Mui-selected': {

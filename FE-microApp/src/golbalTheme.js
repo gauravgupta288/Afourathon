@@ -1,5 +1,10 @@
-import { createTheme } from "@mui/material/styles"
+import React from "react"
 
-export const globalTheme = createTheme({
-    
-})
+import GlobalStyles from '@mui/material/GlobalStyles'
+
+export const inputGlobalStyles = <GlobalStyles styles=
+    {{
+        body:{
+            margin: 0
+        }
+    }} />

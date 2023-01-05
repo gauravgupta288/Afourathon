@@ -111,7 +111,7 @@ export default function PersonalSkills({ tableRows }) {
     { 
         field: 'skill', 
         headerName: 'Skill Name', 
-        minWidth: 100,
+        Width: 100,
         editable: true
     },
     {
@@ -119,20 +119,20 @@ export default function PersonalSkills({ tableRows }) {
         headerName: 'Domain',
         renderEditCell: (params) => <SelectCell {...params} options = {domain}/>,
         editable: true,
-        minWidth: 100
+        Width: 100
     },
     {
         field: 'skillLevel',
         headerName: 'Level',
         renderEditCell: (params) => <SelectCell {...params} options = {level}/>,
-        minWidth: 100,
+        Width: 100,
         editable: true
     },
     {
         field: 'yearsOfExperience',
         headerName: 'Experience',
         type: 'number',
-        minWidth: 100,
+        Width: 100,
         editable: true
     },
     {
@@ -181,7 +181,7 @@ export default function PersonalSkills({ tableRows }) {
   ]
 
   return (
-    <Box
+    <Box style={{border: "2px solid red"}} 
       sx={{
         height: 500,
         width: '100%',
@@ -210,6 +210,7 @@ export default function PersonalSkills({ tableRows }) {
         }}
         experimentalFeatures={{ newEditingApi: true }}
         autoPageSize = {true}
+        
       
         
       />
