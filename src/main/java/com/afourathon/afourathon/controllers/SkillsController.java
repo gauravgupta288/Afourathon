@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/skills")
+@CrossOrigin(origins = "*")
 public class SkillsController {
 
     @Autowired

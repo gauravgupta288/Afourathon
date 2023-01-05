@@ -15,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/employee")
+@CrossOrigin(origins = "*")
 public class EmployeeController {
 
     @Autowired
