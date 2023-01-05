@@ -15,6 +15,18 @@ module.exports = {
             template: './src/index.html'
         })
     ],
+    devServer: {
+        port: 3000,
+        hot: true,
+        open: true,
+        // proxy: {
+        //     '/skills': {
+        //          target: 'http://localhost:3000',
+        //          router: () => '54.199.238.206:8080',
+        //          logLevel: 'debug' /*optional*/
+        //     }
+        //  }
+    },
     
     module: {
         rules: [

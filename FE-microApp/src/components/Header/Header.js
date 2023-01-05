@@ -12,7 +12,7 @@ import { headerStyles } from './style'
 export default function Header() {
 
   return (
-    // <Box sx={headerStyles.box}>
+    <Box sx={headerStyles.box}>
         <AppBar position="static" sx={headerStyles.appbar}>
             <Toolbar sx={headerStyles.toolbar} >           
                 <Typography
@@ -20,19 +20,17 @@ export default function Header() {
                     noWrap
                     sx={headerStyles.typography}
                 >
-                anonymous@email.com
+                gaurav.gupta@afourtech.com
                 </Typography>
-            
-            
-                <Tooltip title="Anonymous">
+                <Tooltip title="Gaurav Gupta">
                     <Avatar
-                        alt="Anonymous"
+                        alt="Gaurav Gupta"
                         src="/broken-image.jpg"
-                        variant=""
+                        sx={headerStyles.avatar}
                     />
                 </Tooltip>
             </Toolbar>
         </AppBar>
-    // {/* </Box> */}
+    </Box>
     )
 }

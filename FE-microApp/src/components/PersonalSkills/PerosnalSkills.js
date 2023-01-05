@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
+
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
@@ -7,9 +7,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/DeleteOutlined'
 import SaveIcon from '@mui/icons-material/Save'
 import CancelIcon from '@mui/icons-material/Close'
-import SelectCell from '../SelectCell/SelectCell'
-import { domain } from '../../constants/domain'
-import { level } from '../../constants/level'
+import { Tooltip,Chip,Avatar } from '@mui/material'
 import {
   GridRowModes,
   DataGrid,
@@ -18,36 +16,35 @@ import {
   GridCsvExportMenuItem,
   GridToolbarExportContainer
 } from '@mui/x-data-grid'
-import { randomId } from '@mui/x-data-grid-generator'
-
+import { PersonalStyles } from './style'
 
 function EditToolbar(props) {
-    const { setRows, setRowModesModel } = props
+  const { setRows, setRowModesModel } = props
 
-    const handleClick = () => {
-    const id = randomId()
-    setRows(oldRows => [
-         
-        { 
-            id, 
-            skill: '',
-            domain: '', 
-            yearsOfExperience: '', 
-            isNew: true 
-        },
-        ...oldRows
+  const handleClick = () => {
+    const id = Math.random()
+    setRows(oldRows => [      
+      { 
+        empId: 419,
+          id, 
+          skill: '',
+          domain: '', 
+          yearsOfExperience: '', 
+          isNew: true 
+      },
+      ...oldRows
     ])
-    setRowModesModel(oldModel => ({
-        
-        [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-        ...oldModel,
+    setRowModesModel(oldModel => ({    
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'skill' },
+      ...oldModel,
     }))
-    }
+  } 
 
-    const csvOptions={
-      fileName: 'PersonalSkills',
-      utf8WithBom: true,
-    }
+  const csvOptions={
+    fileName: 'PersonalSkills',
+    utf8WithBom: true,
+  }
+
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
@@ -60,14 +57,24 @@ function EditToolbar(props) {
   )
 }
 
-EditToolbar.propTypes = {
-  setRowModesModel: PropTypes.func.isRequired,
-  setRows: PropTypes.func.isRequired,
-}
-
-export default function PersonalSkills({ tableRows }) {
-  const [rows, setRows] = React.useState(tableRows)
+export default function PersonalSkills() {
+  const [rows, setRows] = React.useState([
+    {
+      empId: 419,
+      id:"",
+      skill: '',
+      domain: '', 
+      yearsOfExperience: '',
+    }])
   const [rowModesModel, setRowModesModel] = React.useState({})
+  const url = "http://54.199.238.206:8080/skills/419"
+
+  useEffect(() =>  {
+    fetch(url)
+      .then(response => response.json())
+      .then(json => setRows(json))
+      .catch(error => console.log(error))
+    }, [])
 
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true
@@ -86,7 +93,25 @@ export default function PersonalSkills({ tableRows }) {
   }
 
   const handleDeleteClick = (id) => () => {
+    const deletedRow = rows.filter((row) => {
+      if (row.id == id) return  row.skill
+    })
     setRows(rows.filter((row) => row.id !== id))
+    fetch(`${url}/${deletedRow[0].skill}`, { method: 'DELETE' })
+        .then(async response => {
+            const data = await response.json();
+
+            // check for error response
+            if (!response.ok) {
+                // get error message from body or default to response status
+                const error = (data && data.message) || response.status;
+                return Promise.reject(error);
+            }
+
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
   }
 
   const handleCancelClick = (id) => () => {
@@ -103,7 +128,25 @@ export default function PersonalSkills({ tableRows }) {
 
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false }
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)))
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedRow)
+  };
+  fetch(url, requestOptions)
+      .then(async response => {
+          const data = await response.json();
+
+          // check for error response
+          if (!response.ok) {
+              const error = (data && data.message) || response.status;
+              return Promise.reject(error);
+          }
+          setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)))
+      })
+      .catch(error => {
+          console.error('There was an error!', error);
+      });
     return updatedRow
   }
 
@@ -111,34 +154,61 @@ export default function PersonalSkills({ tableRows }) {
     { 
         field: 'skill', 
         headerName: 'Skill Name', 
-        Width: 100,
-        editable: true
+        width: 100,
+        editable: true,
+        headerAlign: 'left',
+        align: 'left',
+        renderCell: (params) => {
+          console.log(params);
+          return (
+              <Tooltip title={params.row.skill}>
+                  <Chip
+                      
+                      label={params.row.skill}
+                      variant="outlined"
+                      color="primary"
+                      size="medium"
+                  />
+              </Tooltip>     
+          )
+      }
     },
     {
         field: 'domain',
         headerName: 'Domain',
-        renderEditCell: (params) => <SelectCell {...params} options = {domain}/>,
+        type:'singleSelect',
+        valueOptions:['Tech','Business','Leadership'],
         editable: true,
-        Width: 100
+        width: 100,
+        headerAlign: 'left',
+        align: 'left'
     },
     {
         field: 'skillLevel',
         headerName: 'Level',
-        renderEditCell: (params) => <SelectCell {...params} options = {level}/>,
-        Width: 100,
-        editable: true
+        type:'singleSelect',
+        valueOptions:['Basic','Intermediate','Advanced'],
+        width: 100,
+        editable: true,
+        headerAlign: 'left',
+        align: 'left'
     },
     {
         field: 'yearsOfExperience',
         headerName: 'Experience',
         type: 'number',
-        Width: 100,
-        editable: true
+        width: 100,
+        editable: true,
+        headerAlign: 'left',
+        align: 'left'
+
     },
     {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
+      headerAlign:"center",
+      align: "center",
       width: 100,
       cellClassName: 'actions',
       getActions: ({ id }) => {
@@ -147,30 +217,31 @@ export default function PersonalSkills({ tableRows }) {
         if (isInEditMode) {
           return [
             <GridActionsCellItem
-              icon={<SaveIcon />}
+              icon={<SaveIcon color='primary'/>}
               label="Save"
+              color="primary"
               onClick={handleSaveClick(id)}
             />,
             <GridActionsCellItem
-              icon={<CancelIcon />}
+              icon={<CancelIcon sx={PersonalStyles.delete} />}
               label="Cancel"
               className="textPrimary"
               onClick={handleCancelClick(id)}
-              color="inherit"
+              color="disabled"
             />,
           ]
         }
 
         return [
           <GridActionsCellItem
-            icon={<EditIcon />}
+            icon={<EditIcon color="primary" />}
             label="Edit"
             className="textPrimary"
             onClick={handleEditClick(id)}
-            color="inherit"
+            
           />,
           <GridActionsCellItem
-            icon={<DeleteIcon />}
+            icon={<DeleteIcon sx={PersonalStyles.delete} />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
@@ -181,19 +252,11 @@ export default function PersonalSkills({ tableRows }) {
   ]
 
   return (
-    <Box style={{border: "2px solid red"}} 
-      sx={{
-        height: 500,
-        width: '100%',
-        '& .actions': {
-          color: 'text.secondary',
-        },
-        '& .textPrimary': {
-          color: 'text.primary',
-        },
-      }}
+    <Box 
+      sx={PersonalStyles.box}
     >
       <DataGrid
+        loading={!(rows.length>1)}
         rows={rows}
         columns={columns}
         editMode="row"
@@ -202,17 +265,12 @@ export default function PersonalSkills({ tableRows }) {
         onRowEditStart={handleRowEditStart}
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
-        components={{
-          Toolbar: EditToolbar,
-        }}
-        componentsProps={{
-          toolbar: { setRows, setRowModesModel },
-        }}
+        components={{Toolbar: EditToolbar}}
+        componentsProps={{toolbar: { setRows, setRowModesModel }}}
         experimentalFeatures={{ newEditingApi: true }}
         autoPageSize = {true}
-        
-      
-        
+        sx={PersonalStyles.dataGrid}
+        disableSelectionOnClick
       />
     </Box>
   )

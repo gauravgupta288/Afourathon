@@ -1,23 +1,37 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-
 import Grid from "@mui/material/Grid"
-
-import { Navbar } from './components'
-// import {PersonalSkills} from './pages'
-import { employees } from './constants/data'
-import {PerosnalSkillsPage} from './pages'
-import { Header } from './components'
-import { Stack } from '@mui/material'
+import Alert from  "@mui/material/Alert"
+import { Navbar, Header } from './components'
 
 export default function App(){
-
-    const [rows] = employees.map(employee => employee.skills)
     return (
-        <Grid container justifyContent="flex-end">   
-            <Navbar/>  
-            
-            <Outlet/>             
+        <Grid 
+            container 
+            alignItems="stretch" 
+            spacing={3} 
+            justifyContent="space-between"
+        >   
+            <Grid 
+                item 
+                xl={3}
+                lg={4}
+                md={4}
+                xs={4}
+            >
+                <Navbar/>
+                
+            </Grid>
+            <Grid 
+                item  
+                xl={9}
+                lg={8}
+                md={8}
+                xs={8}
+            >
+                <Header/> 
+                <Outlet/>      
+            </Grid>       
         </Grid>
     )
 }
