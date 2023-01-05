@@ -31,9 +31,13 @@ public class EmployeeServices {
             if(skillSize == 0){
                 innerMap.put("years of experience", null);
                 innerMap.put("skill", null);
+                innerMap.put("skill-level", null);
+                innerMap.put("doamin", null);
             }else{
                 innerMap.put("skill", emp.getSkills().get(0).getSkill());
                 innerMap.put("years of experience", (Object)emp.getSkills().get(0).getYearsOfExperience());
+                innerMap.put("skill-level", emp.getSkills().get(0).getSkillLevel());
+                innerMap.put("doamin", emp.getSkills().get(0).getDomain());
             }
             map.add(innerMap);
         }
