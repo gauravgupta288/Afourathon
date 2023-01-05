@@ -6,19 +6,18 @@ import { PersonalSkillsPage, TeamSkillsPage } from "./pages"
 
 import { inputGlobalStyles } from "./golbalTheme"
 
-
-const rootElement = document.getElementById('root')
-const root = createRoot(rootElement)
-root.render(       
-    <HashRouter>
-        {inputGlobalStyles}
-        <Routes>
-            <Route path='/' element={<App/>}>
-                <Route path='/personal' element={<PersonalSkillsPage/>}/>
-                <Route path='/team' element={<TeamSkillsPage/>}/>
-            </Route>
-        </Routes>
-    </HashRouter>
-
-    
-)
+if (typeof window !== 'undefined') {
+    const rootElement = document.getElementById('root')
+    const root = createRoot(rootElement)
+        root.render(       
+            <HashRouter>
+                {inputGlobalStyles}
+                <Routes>
+                    <Route path='/' element={<App/>}>
+                        <Route path='/personal' element={<PersonalSkillsPage/>}/>
+                        <Route path='/team' element={<TeamSkillsPage/>}/>
+                    </Route>
+                </Routes>
+            </HashRouter>    
+        )
+    }
